@@ -1,0 +1,33 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+ 
+
+```{r}
+install.packages("class")
+library(class)
+soja = read.csv('soybean.csv', na.strings = "")
+head(soja)
+dim(soja)
+#transforma classe em fator
+soja$class = as.factor(soja$class)
+head(soja)
+```
+
+dividimos em treino a classificacao.
+
+```{r}
+amostra = sample(2,683,replace=T, prob=c(0.7,0.3))
+sojatreino = soja[amostra==1,]
+sojateste = soja[amostra==2,]
+
+```
+
+Fazemos a classificação sem criar modelo
+Dados de treino (instâncias), dados de teste, classe real, número de vizinhos considerados
+
+```{r}
+previsao = knn(sojatreino[,1:35],sojateste[,1:35],sojatreino[,36],k=3)
+previsao
+```
